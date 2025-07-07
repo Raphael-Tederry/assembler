@@ -1,0 +1,84 @@
+----------main-------------
+get the files as phrases 
+special initialization (if needed)
+pre run-> opening macros
+first pass
+second pass
+* genaraiting outputs
+* error handling
+
+--------functions----------
+get files as phrases:
+    will get the cmd input
+    check if the names corespond to files(.as) in the directory
+    read the files into list(?)
+    return the phrases extracted 
+
+opening macros: 1:43 in the lesson 
+    find all macro:
+        (remove the intiation)
+    check if legit:!!! we can assume it is
+        if there is an error we print a massage and stop the program
+    implement into the code
+    save the new file with the macros open (.am)
+    
+first pass:
+    
+
+second pass:
+
+create end of run files: (.ob-computer language(abba...), .ext- extern address, .ent-entry address)
+    if no entry/extern then no need to create the file
+    at the start of .ob need to print IC and DC
+--------
+read phrases:
+
+recognize the phrase as one of four:
+    optional label
+    define: macro?, empty, comment, instruction, guideline(start with .)
+
+is label valid:
+
+is nuber valid?
+is string valid?
+
+read operand:
+
+encode instruction:
+
+encode decimal to base 4:
+
+define stuff:
+
+--------structs---------
+cell:
+    10 bit
+
+instruction: (הוראה) 1 to 5 cells, one command and up to tow operand tow cells wach
+    first cell (command):
+        10 bit filed:
+            0-1: sorting Method E,R,A 
+            2-3: second(destination) operand destination
+            4-5: first(source) operand destination
+            6-9: command cod number (0 to 15)
+    operand:
+        0-1: sorting Method E,R,A (if defined in this file then R if defined in other file then E)
+        2-9: value/address
+
+----------other-------------
+registers: 
+    10 bit each
+    r0 to r7
+    PC - (program counter) indexing the next commad (in the memory)
+    PSW -(program status word)
+
+memory:
+    256 cells(word) 10 bit per word,
+
+
+instruction memory -> IC program counter
+
+data memory -> DC data counter
+    simbols table
+
+error table?
