@@ -1,3 +1,4 @@
+registers are limited to 10 bits=> 2^10 highes number => higest number of cod/data lines
 ----------main-------------
 get the files as phrases 
 special initialization (if needed)
