@@ -45,12 +45,16 @@ This project implements a **two-pass assembler** for a simplified assembly langu
 
 ## 📎 Development Constraints
 
+**For Your C Code:**
 - Must compile using `gcc -Wall -ansi -pedantic`
-- Line length limit: **80 characters**
-- Label length limit: **31 characters**
-- Must handle macros (`mcro ... endmcro`)
+- ANSI C (C90 standard) compatibility required
 - No global variables unless required and documented
 - Full memory cleanup is mandatory (no leaks)
+
+**For Input Assembly Files Your Assembler Must Handle:**
+- Line length limit: **80 characters** (input `.as` files)
+- Label length limit: **31 characters** (in assembly code)
+- Must handle macros (`mcro ... endmcro`)
 
 ---
 

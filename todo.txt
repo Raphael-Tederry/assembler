@@ -14,7 +14,7 @@ get files as phrases:
     read the files into list(?)
     return the phrases extracted 
 
-opening macros: 1:43 in the lesson 
+preassembler/opening macros: 1:43 in the lesson 
     find all macro:
         (remove the intiation)
     check if legit:!!! we can assume it is
@@ -82,3 +82,77 @@ data memory -> DC data counter
     simbols table
 
 error table?
+
+
+how to read a file:
+go line by line 
+give it a number and store it (list? file? other)
+
+
+
+
+main()
+    files = get_files()
+    am_files = pre_assembly()
+    first_run_files = first_run(am_files)
+
+
+--------------------pre_assembly
+pre_assembly(files):
+    for(file in files):
+        am_files += pre_assembly_file(file)
+
+    return am_files
+
+pre_assembly_file(file):
+    in_macro = false
+    list_of_macro = null
+    macro_head = null 
+
+    while(line = line_in_file(file,location)):
+        first_filed = get_first_filed(line)
+        if (first_filed == "macro")
+            if(errors_list = check_macro_start(line,list_of_macro))
+                print(errors_list)
+                break
+            in_macro = true
+            macro_head = create_new_macro_linked_list()
+            add_to_list_of_macro(list_of_macro,macro_head)
+        else if (first_filed == "macro_end")
+            if(errors_list = check_macro_end(line))
+                print(errors_list)
+                break
+            in_macro = false
+            macro_head = null
+        else if (in_macro == true)
+            add_line_to_macro(macro_head)
+        else if (first_filed in list_of_macro):
+            copy_macro_to_new_file(new_file, *macro)
+        else 
+            copy_line_to_file(new_file,line)
+        location++
+
+    save_new_file(file_name, ending)
+    return new_file
+------------------
+
+---------------------first_run
+first_run(am_files):
+    for (file in am_files)
+        first_run_file(file)
+
+
+first_run_file(file):
+    
+
+
+
+
+
+
+
+
+
+
+
+
