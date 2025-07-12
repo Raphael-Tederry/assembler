@@ -1,30 +1,56 @@
 registers are limited to 10 bits=> 2^10 highes number => higest number of cod/data lines
 ----------main-------------
-get the files as phrases 
-special initialization (if needed)
-pre run-> opening macros
+
 first pass
 second pass
 * genaraiting outputs
 * error handling
 
 --------functions----------
-get files as phrases:
+get_files(file):
     will get the cmd input
     check if the names corespond to files(.as) in the directory
     read the files into list(?)
     return the phrases extracted 
 
-preassembler/opening macros: 1:43 in the lesson 
-    find all macro:
-        (remove the intiation)
-    check if legit:!!! we can assume it is
-        if there is an error we print a massage and stop the program
-    implement into the code
-    save the new file with the macros open (.am)
+get_line_in_file(file,location):
+    will get us the line numberd @location in the file 
+    or 0/none if its the end of the file
     
-first pass:
+add_line_to_file(file, line):
     
+save_file(file, file_name, ending):
+    save a file by name and ending(am/ob)
+
+
+get_first_filed(line):
+    will get us the first none label word of the line
+    or "" if there is none
+
+
+check_macro_start(line, list_of_macro)):
+    will check if the macro in @line alredy exist in list_of_macro
+    return an error if it does
+
+create_new_macro_linked_list():
+    will create a new linked list and return the head pointer
+
+add_to_list_of_macro(list_of_macro,macro_head):
+    add a new linked list starting at @macro_head to
+    the linked_list @list_of_macro 
+
+add_line_to_macro(macro_head,line):
+    add @line to the linked_list starting at @macro_head
+
+check_macro_end(line):
+    get the line containig macro_end and check its leagal
+    if yes return 0 otherwise return an apropriait error
+
+copy_macro_to_file(new_file, *macro):
+    copy the linked_list @macro to new_file line by line
+    use add_line_to_file(new_file, line)
+
+
 
 second pass:
 
@@ -91,7 +117,7 @@ give it a number and store it (list? file? other)
 
 
 
-
+--------------------main
 main()
     files = get_files()
     am_files = pre_assembly()
@@ -109,13 +135,16 @@ pre_assembly_file(file):
     in_macro = false
     list_of_macro = null
     macro_head = null 
+    new_file = ""
 
-    while(line = line_in_file(file,location)):
+    while(line = get_line_in_file(file,location)):
         first_filed = get_first_filed(line)
         if (first_filed == "macro")
-            if(errors_list = check_macro_start(line,list_of_macro))
+            if(errors_list = check_macro_start(line, list_of_macro))
                 print(errors_list)
                 break
+            if (in_macro == true):
+                print (error: was promised to not have two macros imbeded)
             in_macro = true
             macro_head = create_new_macro_linked_list()
             add_to_list_of_macro(list_of_macro,macro_head)
@@ -126,14 +155,14 @@ pre_assembly_file(file):
             in_macro = false
             macro_head = null
         else if (in_macro == true)
-            add_line_to_macro(macro_head)
+            add_line_to_macro(macro_head,line)
         else if (first_filed in list_of_macro):
-            copy_macro_to_new_file(new_file, *macro)
+            copy_macro_to_file(new_file, *macro)
         else 
-            copy_line_to_file(new_file,line)
+            add_line_to_file(new_file,line)
         location++
 
-    save_new_file(file_name, ending)
+    save_file(new_file, file_name, ending)
     return new_file
 ------------------
 
