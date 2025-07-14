@@ -16,6 +16,7 @@ get_files(file):
 
 get_line_in_file(file,location):
     will get us the line numberd @location in the file 
+    return a list of the word in the line
     or 0/none if its the end of the file
     
 add_line_to_file(file, line):
@@ -23,10 +24,6 @@ add_line_to_file(file, line):
 save_file(file, file_name, ending):
     save a file by name and ending(am/ob)
 
-
-get_first_filed(line):
-    will get us the first none label word of the line
-    or "" if there is none
 
 
 check_macro_start(line, list_of_macro)):
@@ -139,7 +136,7 @@ pre_assembly_file(file):
     new_file = ""
 
     while(line = get_line_in_file(file,location)):
-        first_filed = get_first_filed(line)
+        first_filed = line[0]
         if (first_filed == "macro")
             if(errors_list = check_macro_start(line, list_of_macro))
                 print(errors_list)
@@ -172,9 +169,59 @@ first_run(am_files):
     for (file in am_files)
         first_run_file(file)
 
+=====================================
+first_run(am_files):
+    for (file in files):
+        first_run_file(file)
+
+
 
 first_run_file(file):
-    
+    int IC , DC = 0 \\ instruction counter data counter
+    table_instructions, table_datas=""
+    symbole_table=linked_list   \\ symbole, leagale, line(int), trait
+    symbole_flag=0
+    current_filed = 0
+
+    line_conter = 0
+    while(line = get_line_in_file(file,line_conter))
+        first_filed = line[current_filed]
+        if(is_symbole(first_filed)):
+            symbole_flag = 1
+            current_filed = 1
+        if (is_guidline(line[current_filed])):
+            if(symbole_flag):
+                if (is_symbole_in_table(line[0])):
+                    ERROR CANT HAVE DOUBLE SYMBOLES
+                else:
+                    add_to_symbole_table(line[0], true, DC, data)
+                add_to_list_of_symboles(line[0], true, DC, data)
+            
+            func = identify_data_type(line[current_filed])
+            code,counter = func(line, current_filed)
+            table_data += code
+            DC += counter
+        
+        
+        line_conter++
+
+
+
+move(line, current_filed): return [code(str), counter]
+string(line, current_filed): return [code(str), counter]
+...
+
+
+MAIN: move m[r1][r2],m[r1][r2]  
+.mat m2 ....
+MAIN2: .data m1
+MAIN2:   01201010
+         1010110
+         101010
+
+je 
+JMP MAIN
+[MAIN:, move, r1,',', r2]
 
 
 
