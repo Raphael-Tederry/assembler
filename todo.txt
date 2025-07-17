@@ -67,10 +67,45 @@ error_in_first_run(first_run_output_list):
     get the first_run_output_list 
     return true if there is an error in it (so we stop the program)
 
+is_symbole(first_filed):
+    get first_filed the first part of a line
+    return true if its a lable
+
+is_guidline(word):
+    get a word and 
+    return true if its a guidline הנחייה
+
+is_extern_or_entry(word):
+    get a word
+    return true if its extern or entry
+
+is_extern(word):
+    get a word
+    return true if its extern
+
+is_symbole_in_table(word):
+    get word = a symbole (first_filed) 
+    return true if its alredy in the symbole_table
+
+add_to_symbole_table(symbole, leagale, line(int), trait):
+    get str symbole, bool leagal, int line(DC/IC), str trait(data/code)
+
+identify_data_type(word):
+    get a word (suposed to be a command)
+    return the function to call (i.e. move() or mat()), if invalid word return 0
+
+add_to_instruction_table(IC, counter_L, code):
+    get int IC, counter_L(number of new lines), str code and add them to the table
+
+"func"(line, current_filed):
+    get line = the a list of the words in the line, current_filed = the index where the function name is in the list
+    return a string of the machin code, an int for the number of line of code 1 to 5
 
 
 
-ssecond_run(first_run_output_list):
+
+
+second_run(first_run_output_list):
     get the first_run_output_list 
 
 create end of run files: (.ob-computer language(abba...), .ext- extern address, .ent-entry address)
@@ -97,11 +132,12 @@ linked_list:
 macro_linked_lis:
 
 first_run_output:
-    ERROR: 
+    file_name: str
+    ERROR: '' or str
     ICF: 1024> int >0
     DCF: 1024> int >0
     table_instructions: linked_list \\ IC, counter_L, code
-    table_datas
+    table_datas: 
     symbole_table: linked_list   \\ symbole, leagale, line(int), trait
 
 
@@ -183,6 +219,7 @@ first_run_file(file):
 
     line_conter = 0
     while(line = get_line_in_file(file,line_conter))
+        current_filed = 0
         symbole_flag = 0 
         first_filed = line[current_filed]
         if(is_symbole(first_filed)):
@@ -206,6 +243,8 @@ first_run_file(file):
             if (is_extern(line[current_filed]))
                 (check for errors)
                 add_to_symbole_table(line[current_filed+1], true, 0, external)
+            else:
+                add entries to table_instructions
         
         else:   \\ instruction
             if(symbole_flag):   \\ can be function\macro 1
@@ -225,9 +264,27 @@ first_run_file(file):
 
     if ( not ERROR):
 
-        return (ERROR,ICF,DCF,table_instructions, table_datas, symbole_table)
+        return (file_name,ERROR,ICF,DCF,table_instructions, table_datas, symbole_table)
+
+---------------------second_run
+second_run(first_run_output_list):
+    for (first_run_output in first_run_output_list):
+        second_run_file(first_run_output, first_run_output_list)
 
 
+second_run_file(first_run_output, first_run_output_list)
+    char * new_ob_file = ''
+    while(line = get_line_in_file(file,line_conter)):
+        current_filed = 0 
+        first_filed = line[current_filed]
+        if(is_symbole(first_filed)):
+            current_filed++
+        if (!is_guidline(line[current_filed]) and !is_extern(line[current_filed])):
+            if(is_entry(line[current_filed])):
+                add_to_symbole_entry(line[current_filed+1], first_run_output->symbole_table)
+            else:
+                line = symbole_to_code(line[current_filed],symbole_table)
+                
 
 
 
@@ -236,7 +293,8 @@ first_run_file(file):
 move(line, current_filed): return [code(str), counter]
 string(line, current_filed): return [code(str), counter]
 ...
-
+f0:(file_name,ERROR,ICF,DCF,table_instructions, table_datas, symbole_table={MAIN[code, entry]})
+entry MAIN
 
 MAIN: move m[r1][r2],m[r1][r2]  
 .mat m2 ....
@@ -247,14 +305,17 @@ MAIN2:   01201010
 
 je 
 JMP MAIN
-[MAIN:, move, r1,',', r2]
+mat m  
 
+f1: (file_name,ERROR,ICF,DCF,table_instructions, table_datas, symbole_table={MAIN[extern]})
 
+external MAIN
 
-f1: 
+jmp MAIN
 l1: move r3, r4 ic=0
 
-f2: 
+f2: (file_name,ERROR,ICF,DCF,table_instructions, table_datas, symbole_table={MAIN[data]})
+MAIN: mat ....
 l2: ghj ic = 0
 .mat 0, l2 ,ext  
 sag
@@ -262,8 +323,21 @@ sag
 
 
 
-
-
+external m1
+01010101010
+01010101010
+m1                        <----      0101010110-10
+str
+01010101010
+01010101010
+.entry main
+01010101010
+01010101010
+m11
+str2
+01010101010
+01010101010
+.entry main2
 
 
 
