@@ -44,7 +44,7 @@ char* read_line_from_file(const char* filename, int line_number)
         if (current_line == line_number) {
             line = malloc(strlen(buffer) + 1);
             if (line != NULL) {
-                strcpy_s(line, strlen(buffer) + 1, buffer);
+                strcpy(line, buffer);
             }
             break;
         }
