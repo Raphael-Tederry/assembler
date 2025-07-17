@@ -25,6 +25,11 @@ save_file(file, file_name, ending):
     save a file by name and ending(am/ob)
 
 
+pre_assembly(files):
+    get a list of files
+    return a list of am files
+
+
 
 check_macro_start(line, list_of_macro)):
     will check if the macro in @line alredy exist in list_of_macro
@@ -50,36 +55,33 @@ copy_macro_to_file(new_file, *macro):
 
 
 
-second pass:
+first_run(am_files):
+    get a list of am files
+    return a list of first_run_output_list tipe of stract
+
+first_run_file(file):
+    get an am file
+    return a first_run_output struct
+
+error_in_first_run(first_run_output_list):
+    get the first_run_output_list 
+    return true if there is an error in it (so we stop the program)
+
+
+
+
+ssecond_run(first_run_output_list):
+    get the first_run_output_list 
 
 create end of run files: (.ob-computer language(abba...), .ext- extern address, .ent-entry address)
     if no entry/extern then no need to create the file
     at the start of .ob need to print IC and DC
---------
-read phrases:
-
-recognize the phrase as one of four:
-    optional label
-    define: macro?, empty, comment, instruction, guideline(start with .)
-
-is label valid:
-
-is nuber valid?
-is string valid?
-
-read operand:
-
-encode instruction:
-
-encode decimal to base 4:
-
-define stuff:
 
 --------structs---------
 cell:
     10 bit
 
-instruction: (הוראה) 1 to 5 cells, one command and up to tow operand tow cells wach
+instruction: (הוראה) 1 to 5 cells, one command and up to tow operand two cells each
     first cell (command):
         10 bit filed:
             0-1: sorting Method E,R,A 
@@ -90,36 +92,28 @@ instruction: (הוראה) 1 to 5 cells, one command and up to tow operand tow ce
         0-1: sorting Method E,R,A (if defined in this file then R if defined in other file then E)
         2-9: value/address
 
-----------other-------------
-registers: 
-    10 bit each
-    r0 to r7
-    PC - (program counter) indexing the next commad (in the memory)
-    PSW -(program status word)
+linked_list:
 
-memory:
-    256 cells(word) 10 bit per word,
+macro_linked_lis:
 
-
-instruction memory -> IC program counter
-
-data memory -> DC data counter
-    simbols table
-
-error table?
-
-
-how to read a file:
-go line by line 
-give it a number and store it (list? file? other)
-
+first_run_output:
+    ERROR: 
+    ICF: 1024> int >0
+    DCF: 1024> int >0
+    table_instructions: linked_list \\ IC, counter_L, code
+    table_datas
+    symbole_table: linked_list   \\ symbole, leagale, line(int), trait
 
 
 --------------------main
 main()
     files = get_files()
-    am_files = pre_assembly()
-    first_run_files = first_run(am_files)
+    am_files = pre_assembly(files)
+    first_run_output_list = first_run(am_files)
+    if (!error_in_first_run(first_run_output_list)):
+        second_run(first_run_output_list)    
+    return
+    
 
 
 --------------------pre_assembly
@@ -166,44 +160,76 @@ pre_assembly_file(file):
 
 ---------------------first_run
 first_run(am_files):
-    for (file in am_files)
-        first_run_file(file)
-
-=====================================
-first_run(am_files):
+    error_flag = 0
+    struct first_run_output =[]
     for (file in files):
-        first_run_file(file)
-
+        ERROR,ICF,DCF,table_instructions, table_datas, symbole_table = first_run_file(file)
+        first_run_output.append(ERROR,ICF,DCF,table_instructions, table_datas, symbole_table)
+        update_symbole_table(symbole_table, ICF)
+        if (ERROR):
+            error_flag = 1
+    return first_run_output
 
 
 first_run_file(file):
     int IC , DC = 0 \\ instruction counter data counter
-    table_instructions, table_datas=""
+    table_instructions = linked_list \\ IC, counter_L, code
+    table_datas= 
     symbole_table=linked_list   \\ symbole, leagale, line(int), trait
-    symbole_flag=0
+    symbole_flag= 0
     current_filed = 0
+
+    linked_list ERROR = ''
 
     line_conter = 0
     while(line = get_line_in_file(file,line_conter))
+        symbole_flag = 0 
         first_filed = line[current_filed]
         if(is_symbole(first_filed)):
             symbole_flag = 1
             current_filed = 1
         if (is_guidline(line[current_filed])):
-            if(symbole_flag):
+            if(symbole_flag):   \\ can be function\macro 1
                 if (is_symbole_in_table(line[0])):
-                    ERROR CANT HAVE DOUBLE SYMBOLES
+                    ERROR += ERROR CANT HAVE DOUBLE SYMBOLES
+                    add_to_symbole_table(line[0], false, DC, data)
                 else:
                     add_to_symbole_table(line[0], true, DC, data)
-                add_to_list_of_symboles(line[0], true, DC, data)
             
             func = identify_data_type(line[current_filed])
-            code,counter = func(line, current_filed)
+            if (func == 0):
+                ERROR += ERROR NON EXICTING FUNCTION
+            code,counter = func(line, current_filed)    \\
             table_data += code
             DC += counter
+        else if (is_extern_or_entry(line[current_filed])):
+            if (is_extern(line[current_filed]))
+                (check for errors)
+                add_to_symbole_table(line[current_filed+1], true, 0, external)
         
-        
+        else:   \\ instruction
+            if(symbole_flag):   \\ can be function\macro 1
+                if (is_symbole_in_table(line[0])):
+                    ERROR += ERROR CANT HAVE DOUBLE SYMBOLES
+                    add_to_symbole_table(line[0], false, IC, code)
+                else:
+                    add_to_symbole_table(line[0], true, IC, code)
+            func = identify_data_type(line[current_filed])
+            if (func == 0):
+                ERROR += ERROR NON EXICTING FUNCTION
+            code,counter_L = func(line, current_filed)    \\
+            add_to_instruction_table(IC, counter_L, code)
+            IC += counter_L
+
         line_conter++
+
+    if ( not ERROR):
+
+        return (ERROR,ICF,DCF,table_instructions, table_datas, symbole_table)
+
+
+
+
 
 
 
@@ -217,7 +243,7 @@ MAIN: move m[r1][r2],m[r1][r2]
 MAIN2: .data m1
 MAIN2:   01201010
          1010110
-         101010
+         1010100
 
 je 
 JMP MAIN
@@ -225,6 +251,13 @@ JMP MAIN
 
 
 
+f1: 
+l1: move r3, r4 ic=0
+
+f2: 
+l2: ghj ic = 0
+.mat 0, l2 ,ext  
+sag
 
 
 
@@ -234,3 +267,29 @@ JMP MAIN
 
 
 
+
+
+
+
+----------other-------------
+registers: 
+    10 bit each
+    r0 to r7
+    PC - (program counter) indexing the next commad (in the memory)
+    PSW -(program status word)
+
+memory:?????????????
+    256 cells(word) 10 bit per word,
+
+
+instruction memory -> IC program counter
+
+data memory -> DC data counter
+    simbols table
+
+error table?
+
+
+how to read a file:
+go line by line 
+give it a number and store it (list? file? other)

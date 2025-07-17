@@ -1,5 +1,4 @@
 # Final Project – System Programming Lab (MMN14)
-
 **Course:** 20465 – Spring 2025, Open University of Israel  
 **Student Name:** [Your Full Name]  
 **ID:** [Your Student ID]

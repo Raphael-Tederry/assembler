@@ -8,6 +8,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+char* read_line_from_file(const char* filename, int line_number);
 
 /**
  * Main function - entry point of the assembler program
@@ -18,9 +21,35 @@
  */
 int main(int argc, char *argv[])
 {
-    printf("Hello World!\n");
-    printf("Assembler Project - System Programming Lab\n");
-    printf("Ready to begin development...\n");
+    char* line = read_line_from_file("README.md", 1);
+    printf("%s", line);
+    
     
     return EXIT_SUCCESS;
 } 
+
+char* read_line_from_file(const char* filename, int line_number)
+{
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        return NULL;
+    }
+
+    char buffer[1024];
+    char* line = NULL;
+    int current_line = 0;
+
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+        current_line++;
+        if (current_line == line_number) {
+            line = malloc(strlen(buffer) + 1);
+            if (line != NULL) {
+                strcpy_s(line, strlen(buffer) + 1, buffer);
+            }
+            break;
+        }
+    }
+
+    fclose(file);
+    return line;
+}
