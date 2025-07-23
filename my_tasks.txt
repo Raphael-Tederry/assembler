@@ -1,1 +1,1 @@
-להקים גיט
+cant be lable at start of macro definition
