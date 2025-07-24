@@ -38,7 +38,7 @@ char* read_line_from_file(const char* filename, int line_number)
 }
 
 
-/* get_files(file): r working
+/* get_files(file): ruben working
  *     will get the cmd input
  *     check if the names corespond to files(.as) in the directory
  *     read the files into list(all the files) of list(all the lines) of list(all the the words)
@@ -46,6 +46,25 @@ char* read_line_from_file(const char* filename, int line_number)
  *     ERROR handling dont stop the project
  *     return the phrases extracted 
  */
+char *** get_files(int number_of_files, char* files_name[]) {
+
+   char ***files = (char***)malloc(sizeof(*files) *number_of_files);
+   if (files == NULL){
+    //handle erorrs
+    return NULL;
+   }
+   for (i = 0; i <= number_of_files){
+    files[i] = get_file(files[i], files_name[i]);
+   }
+    return files;
+}
+ get_file(char** file, char* file_name){
+    FILE *file = fopen(file_name);
+
+    call a function to fill words in line
+}
+get_line
+
 
 /* save_file(file, file_name, ending): 
  *     save a file(list of lines of list of words) by name and ending(am/ob)
