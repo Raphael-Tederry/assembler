@@ -7,4 +7,3 @@ assembler.o: assembler.c crud.c
 clean:
 	rm -f *.o assembler
 
-.PHONY: clean 

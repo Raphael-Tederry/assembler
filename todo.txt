@@ -140,7 +140,9 @@ instruction: (הוראה) 1 to 5 cells, one command and up to tow operand two ce
         0-1: sorting Method E,R,A (if defined in this file then R if defined in other file then E)
         2-9: value/address
 
-linked_list:
+lines_container: // files, macro 
+    name: 
+    lines: list of list of list //(realoc)
 
 macro_linked_lis: linked list containing list of list (lines of words)
 
