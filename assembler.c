@@ -20,7 +20,9 @@
  */
 int main(int argc, char *argv[])
 {
-    char* line = read_line_from_file("README.md", 1);
+    char* line;
+    
+    line = read_line_from_file("README.md", 1);
     printf("%s", line);
     
     
