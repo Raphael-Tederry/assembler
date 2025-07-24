@@ -39,7 +39,7 @@ pre_assembly(files):
 
 
 handel_macro_start(line, list_of_macro,macro_head):
-    will check for errors(lredy exist in list_of_macro, if not defined correctly ...)
+    will check for errors(alredy exist in list_of_macro, if not defined correctly ...)
     if correct will crreate new macro in macro_head add it to the list and return null
         macro_head = create_new_macro_linked_list()
         add_to_list_of_macro(list_of_macro,macro_head)
@@ -176,7 +176,7 @@ pre_assembly(char*** files):
 
 pre_assembly_file(char** file):
     in_macro = false
-    truct list_of_macro = null
+    struct list_of_macro = null
     macro_head = null 
     new_file = "" \\ list of list
 
