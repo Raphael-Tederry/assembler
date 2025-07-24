@@ -1,1 +1,6 @@
 functions name, file , creator, what does it does
+
+
+char* add_ending_to_name(char *file_base_name, char *ending), crud.c , ruben
+adds ending to the name of the file xd 
+return pointer to string filename.ending
