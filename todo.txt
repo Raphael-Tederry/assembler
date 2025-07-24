@@ -26,10 +26,10 @@ get_line_in_file(file,location):
     return a list of the word in the line
     or 0/none if its the end of the file
     
-add_line_to_file(file, line):
+add_line_to_file(file, line):\\???
     
-save_file(file, file_name, ending):
-    save a file by name and ending(am/ob)
+save_file(file, file_name, ending): 
+    save a file(list of lines of list of words) by name and ending(am/ob)
 
 
 pre_assembly(files):
@@ -60,8 +60,8 @@ check_macro_end(line):
     get the line containig macro_end and check its leagal
     if yes return 0 otherwise return an apropriait error
 
-copy_macro_to_file(new_file, *macro):
-    copy the linked_list @macro to new_file line by line
+copy_macro_to_file(file, macro_name):
+    copy the linked_list macro named macro_name to file line by line
     use add_line_to_file(new_file, line)
 
 is_lable(word):
@@ -142,7 +142,7 @@ instruction: (הוראה) 1 to 5 cells, one command and up to tow operand two ce
 
 linked_list:
 
-macro_linked_lis:
+macro_linked_lis: linked list containing list of list (lines of words)
 
 first_run_output:
     file_name: str
@@ -157,7 +157,7 @@ first_run_output:
 --------------------main
 main()
     char*** files = get_files()
-    am_files = pre_assembly(files)
+    char*** am_files = pre_assembly(files)
     first_run_output_list = first_run(am_files)
     if (!error_in_first_run(first_run_output_list)):
         second_run(first_run_output_list)    
@@ -172,7 +172,7 @@ pre_assembly(char*** files):
     for(file in files): \\ file = list of list (lines of words)
         am_files += pre_assembly_file(file)
 
-    return am_files
+    return am_files \\ list of files >list of lines> list of words
 
 pre_assembly_file(char** file):
     in_macro = false
@@ -198,11 +198,11 @@ pre_assembly_file(char** file):
         else if (in_macro == true)
             add_line_to_macro(macro_head,line)
         else if (is_lable(first_filed) and line[1]== "macro"):
-            ERROR cant be lable at start of macro
+            print_error(ERROR cant be lable at start of macro)
         else if (first_filed in list_of_macro):
-            copy_macro_to_file(new_file, *macro)
+            copy_macro_to_file(new_file, first_filed)   \\its not a file yet its a list of list
         else 
-            add_line_to_file(new_file,line)
+            add_line_to_file(new_file,line) \\its not a file yet its a list of list
         location++
 
     save_file(new_file, file_name, ending)
