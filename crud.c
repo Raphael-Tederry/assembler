@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "string_handler.c"
 
 
 
@@ -46,7 +46,7 @@ char* read_line_from_file(const char* filename, int line_number)
  *     ERROR handling dont stop the project
  *     return the phrases extracted 
  */
-char *** get_files(int number_of_files, char* files_name[]) {
+char **** get_files(int number_of_files, char* files_name[]) {
     int i;
    char ***files = (char***)malloc(sizeof(*files) *number_of_files);
    if (files == NULL){
@@ -58,7 +58,7 @@ char *** get_files(int number_of_files, char* files_name[]) {
    }
     return files;
 }
- char** get_file(char* file__base_name){
+ char*** get_file(char* file__base_name){
     char** output_file;
     char* file_as_name = add_ending_to_name(file__base_name, ".as");
     FILE* input_file = fopen(file_as_name, "r");
@@ -69,19 +69,11 @@ char *** get_files(int number_of_files, char* files_name[]) {
         
     }
     free(file_as_name);
+    fclose(input_file);
     return output_file;
 }
 
-char* add_ending_to_name(char *file_base_name, char *ending){
-    char *file_as_name = malloc(strlen(file_base_name) + strlen(ending) + 1);
-    if(file_as_name == NULL){
-        // failed to allocate memory for full name
-        return NULL;
-    }
-    sprintf(file_as_name, "%s%s", file_base_name, ending);
-    return file_as_name;
-} 
-
+char* read_line_fro_file()
 
 
 /* save_file(file, file_name, ending): 

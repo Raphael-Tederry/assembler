@@ -1,6 +1,10 @@
 functions name, file , creator, what does it does
 
 
-char* add_ending_to_name(char *file_base_name, char *ending), crud.c , ruben
+char* add_ending_to_name(char *file_base_name, char *ending), string_handler.c , ruben
 adds ending to the name of the file xd 
 return pointer to string filename.ending
+
+int is_string_valid(const char*), string_handler.c , ruben,
+checks if sent string is not empty or only white spaces.
+if string is empty or only white spaces return 0 else return 1.
