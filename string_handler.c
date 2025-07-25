@@ -31,9 +31,21 @@ char* add_ending_to_name(char *file_base_name, char *ending){
 } 
 
 
+/**need to be done
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 
-
-
+int is_lable(char* word){
+    /*     get a string
+     *     return true if it can be a lable
+     */
+        return 1;
+    }
 
 
 /* check_macro_end(line):
@@ -42,8 +54,4 @@ char* add_ending_to_name(char *file_base_name, char *ending){
  */
 
 
-/* is_lable(word):
- *     get a string
- *     return true if it can be a lable
- */
 
