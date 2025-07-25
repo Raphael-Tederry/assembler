@@ -4,6 +4,4 @@ assembler: assembler.o
 assembler.o: assembler.c crud.c
 	gcc -c -Wall -ansi -pedantic assembler.c -o assembler.o
 
-clean:
-	rm -f *.o assembler
 

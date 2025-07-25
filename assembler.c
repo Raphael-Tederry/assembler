@@ -10,12 +10,14 @@
 #include <stdlib.h>
 #include "crud.c"
 
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
 
 /**
  * Main function - entry point of the assembler program
  * 
  * @param argc Number of command line arguments
- * @param argv Array of command line argument strings
+ * @param argv Array of command line argument strings should be the files to assemble
  * @return EXIT_SUCCESS on successful execution, EXIT_FAILURE otherwise
  */
 int main(int argc, char *argv[])
