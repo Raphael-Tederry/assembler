@@ -2,6 +2,7 @@
 
 
 // #include "crud.c"
+// #include <corecrt_search.h>
 #include <stdio.h>
 #include <stdlib.h> // Required for malloc
 #include <string.h>
@@ -48,15 +49,16 @@ struct lines_container* pre_assembly(int argc, char *argv[]){
     struct lines_container* am_files = malloc(argc * sizeof(struct lines_container));
     struct lines_container new_am_file;
     if (!am_files) {
-        return am_files;  // Handle allocation failure
+        return NULL;  // Handle allocation failure
     }
     
     int i;
     struct lines_container old_as_file;
     for(i = 0; i < argc; i++){
+        old_as_file.type = AS_FILE;
         old_as_file.name = argv[i];
         old_as_file.lines = get_file(argv[i]); // TODO: check if this is correct get_file returns char**
-        printf("riminder do so error handling to files");
+        printf("riminder to do error handling to files");
         new_am_file = pre_assembly_file(old_as_file);
         if (new_am_file.name) {
             am_files[i] = new_am_file;
@@ -92,9 +94,10 @@ struct lines_container pre_assembly_file(struct lines_container as_file){ //TODO
     int line_index_as_file;
     char* first_field;
 
+    /*lines_container{container_type_t type; char* name; char*** lines; int lines_index; int lines_capacity;}*/
     struct lines_container temp;
-    struct lines_container am_file = {0 ,as_file.name, NULL, NULL};
-    struct lines_container current_macro = {NULL, NULL};
+    struct lines_container am_file = {AM_FILE,as_file.name, NULL, 0, as_file.lines_capacity}; /*we assume the am file will be at least the same size as the as file*/
+    struct lines_container current_macro = {MACRO, NULL, NULL, 0, 2};
     struct lines_container* macro_list = malloc(2 * sizeof(struct lines_container)); // Start small
 
     /*going over the lines of the file aka main pre assembly*/

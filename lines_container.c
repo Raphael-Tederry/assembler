@@ -23,12 +23,48 @@
  int copy_lines_between_lines_container(struct lines_container* destination, struct lines_container origin){
     int i;
     for(i = 0; i < origin.lines_index; i++){
+        if(resize_lines_container(destination) == EXIT_FAILURE){
+            return EXIT_FAILURE;
+        }
         destination->lines[destination->lines_index] = origin.lines[i];
         destination->lines_index++;
     }
     return EXIT_SUCCESS;
 }
 
+/**raph done!
+ * will resize the lines_container if needed
+ *
+ * process:
+ * we check if the lines_capacity is 0 or the lines array is NULL (first time we call the function)
+ *      we initialize the lines_capacity to 2 and realloc the lines array to a size of 2
+ *
+ * we check if the lines_index is equal to the lines_capacity
+ *      we double the lines_capacity
+ *      we realloc the lines array to the new size
+ *
+ * if we failed to allocate memory we return EXIT_FAILURE
+ *
+ * @param container the pointer to the lines_container to resize
+ * @return EXIT_SUCCESS if the lines_container was resized, EXIT_FAILURE otherwise
+ */
+int resize_lines_container(struct lines_container* container){
+    if(container->lines_capacity == 0 || container->lines == NULL){
+        container->lines_capacity = 2;
+        container->lines = malloc(container->lines_capacity * sizeof(char**));
+        if(container->lines == NULL){
+            return EXIT_FAILURE;
+        }
+    }
+    if(container->lines_index == container->lines_capacity){
+        container->lines_capacity *= 2;
+        container->lines = realloc(container->lines,container->lines_capacity * sizeof(char**));
+        if(container->lines == NULL){
+            return EXIT_FAILURE;
+        }
+    }
+    return EXIT_SUCCESS;
+}
 
 /**raph done!
  * will return the lines_container of from an array of lines_container with the given name

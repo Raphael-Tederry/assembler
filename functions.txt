@@ -35,12 +35,12 @@ struct lines_container* resize_macro_list_if_needed(struct lines_container* macr
     resizes macro list if needed by doubling capacity
 
 
-int copy_lines_between_lines_container(struct lines_container* destination, struct lines_container origin), pre_assembly.c, raph
+int copy_lines_between_lines_container(struct lines_container* destination, struct lines_container origin), lines_container.c, raph
     will copy all the lines from the origin lines_container to the destination lines_container
     this function will add them to the destination lines_container no overwriting
 
-
-struct lines_container get_lines_container_by_name(int array_size, struct lines_container* array, char* name), pre_assembly.c, raph
+struct lines_container get_lines_container_by_name(int array_size, struct lines_container* array, char* name), lines_container.c, raph
     will return the lines_container of from an array of lines_container with the given name
 
-
+int resize_lines_container(struct lines_container* container), lines_container.c, raph
+    will resize the lines_container if needed
