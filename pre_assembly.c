@@ -24,6 +24,7 @@ struct lines_container* resize_macro_list_if_needed(struct lines_container*, int
 struct lines_container pre_assembly_file(struct lines_container);
 int macro_initialization_handler(int , struct lines_container* , char** , int , struct lines_container* , char* );
 int macro_end_handler(char** , int* , struct lines_container* , char* , int* , struct lines_container* );
+int in_macro_handler(struct lines_container* , int , struct lines_container* );
 
 /*need to be created in an another file?*/
 int is_instruction(char* word);
@@ -119,8 +120,10 @@ struct lines_container pre_assembly_file(struct lines_container as_file){ //TODO
                 return (struct lines_container){NULL, NULL};
             }
         } else if(in_macro){
-            current_macro.lines[current_macro.lines_index] = as_file.lines[line_index_as_file];
-            current_macro.lines_index++;
+                if(in_macro_handler(&as_file, line_index_as_file, &current_macro) == EXIT_FAILURE){
+                return (struct lines_container){NULL, NULL};// TODO: ERROR HANDLING
+            }
+        /*if the first field is a call to a macro*/
         } else if((temp = get_lines_container_by_name(macro_list_index, macro_list, first_field)).name){
             /*we know the name is in the macro list, we need to add the macro to the am file*/
             if(!copy_lines_between_lines_container(&am_file, temp)){
@@ -128,8 +131,10 @@ struct lines_container pre_assembly_file(struct lines_container as_file){ //TODO
                 return (struct lines_container){NULL, NULL};
             }
         }else { /*adding to the am file*/
-            am_file.lines[am_file.lines_index] = as_file.lines[line_index_as_file];
-            am_file.lines_index++;
+            if(add_line_to_lines_container(&am_file, as_file.lines[line_index_as_file]) == EXIT_FAILURE){
+                printf("while processing the file %s, failed to add the line to the am file", am_file.name);// TODO: ERROR HANDLING
+                return (struct lines_container){NULL, NULL};
+            }
         }
     }
     am_file.lines[am_file.lines_index] = END_OF_FILE;
@@ -138,6 +143,30 @@ struct lines_container pre_assembly_file(struct lines_container as_file){ //TODO
     return am_file;
 }
 
+
+/**raph done!
+ * will add the line to the macro if possible
+ *
+ * process:
+ * we resize the macro if needed
+ * we add the line to the macro
+ * return EXIT_SUCCESS if we succeeded, EXIT_FAILURE otherwise
+ *
+ * @param as_file the 'as' file
+ * @param line_index_as_file the index of the line in the 'as' file to add to the current macro
+ * @param macro the macro to add the line to
+ * @return EXIT_SUCCESS if we succeeded, EXIT_FAILURE otherwise
+ */
+int in_macro_handler(struct lines_container* as_file, int line_index_as_file, struct lines_container* macro){
+        if(resize_lines_container(macro) == EXIT_SUCCESS){
+            macro->lines[macro->lines_index] = as_file->lines[line_index_as_file];
+            macro->lines_index++;
+            return EXIT_SUCCESS;
+        } else {
+            printf("while processing the file %s, failed to resize the current macro", as_file->name);// TODO: ERROR HANDLING
+            return EXIT_FAILURE;
+        }
+    }
 
 /**raph done!
  * will check if the macro initialization is correct and if not we return an error
@@ -217,7 +246,7 @@ int macro_end_handler(char** line, int* in_macro, struct lines_container* macro,
     macro_list[*macro_list_index] = *macro;
     (*macro_list_index)++;
     *in_macro = 0;
-    *macro = (struct lines_container){NULL, NULL};
+    *macro = (struct lines_container){MACRO, NULL, NULL, 0, 2};
     return EXIT_SUCCESS;
 }
 

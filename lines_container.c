@@ -7,6 +7,30 @@
 #define EXIT_FAILURE 1
 
 
+
+/**raph done!
+ * will add a line to the lines_container
+ *
+ * process:
+ * we resize the lines_container if needed
+ * we add the line to the lines_container
+ *
+ * @param container the pointer to the lines_container to add the line to
+ * @param line the line to add to the lines_container
+ * @return EXIT_SUCCESS if the line was added, EXIT_FAILURE otherwise
+ */
+int add_line_to_lines_container(struct lines_container* container, char** line){
+    if(resize_lines_container(container) == EXIT_FAILURE){
+        return EXIT_FAILURE;
+    }
+    container->lines[container->lines_index] = line;
+    container->lines_index++;
+    return EXIT_SUCCESS;
+}
+
+
+
+
 /**raph done!
  * will copy all the lines from the origin lines_container to the destination lines_container
  * this function will add them to the destination lines_container no overwriting

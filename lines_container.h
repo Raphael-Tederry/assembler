@@ -22,5 +22,6 @@ typedef struct lines_container{
 struct lines_container get_lines_container_by_name(int array_size, struct lines_container* array, char* name);
 int copy_lines_between_lines_container(struct lines_container* destination, struct lines_container origin);
 int resize_lines_container(struct lines_container* container);
+int add_line_to_lines_container(struct lines_container* container, char** line);
 
 #endif /* LINES_CONTAINER_H */ 
