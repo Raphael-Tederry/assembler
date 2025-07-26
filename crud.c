@@ -76,7 +76,7 @@ char **** get_files(int number_of_files, char* files_name[]) {
 char* read_line_fro_file()
 
 
-/* save_file(file, file_name, ending): 
+/* save_file(file_name, ending, lines, lines_index): 
  *     save a file(list of lines of list of words) by name and ending(am/ob)
  */
 

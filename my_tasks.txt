@@ -1,1 +1,1 @@
-cant be lable at start of macro definition
+verify we handel double same input correctly
