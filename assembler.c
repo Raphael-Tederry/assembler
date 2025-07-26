@@ -8,7 +8,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "crud.c"
+#include "lines_container.h"
+
+// #include "crud.c"
 #include "pre_assembly.c"
 
 #define EXIT_SUCCESS 0
@@ -31,7 +33,7 @@
  */
 int main(int argc, char *argv[])
 {
-    lines_container* am_files;
+    struct lines_container* am_files;
 
     if(argc == 0){
         printf("No files to assemble");
