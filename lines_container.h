@@ -3,6 +3,7 @@
 
 /* the different types of line containers we can use*/
 typedef enum {
+    NULL_FILE,  /* null file */
     AM_FILE,    /* the file with the openned macros */
     AS_FILE,    /* the origin file as we get it */
     OB_FILE,    /* final file of the project after the assembler */
@@ -13,10 +14,14 @@ typedef enum {
 typedef struct lines_container{
     container_type_t type; 
     char* name;
-    char*** lines;  // Changed from char** to char***
+    char*** lines;  /* Changed from char** to char*** */
     int lines_index;
     int lines_capacity;
 } LC;
+
+extern struct lines_container NULL_LC;
+
+
 
 /* Function declarations */
 struct lines_container get_lines_container_by_name(int array_size, struct lines_container* array, char* name);

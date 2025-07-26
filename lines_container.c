@@ -1,10 +1,19 @@
-#include <stdlib.h> // Required for malloc
+#include <stdlib.h> /* Required for malloc*/
 #include <string.h>
 #include "lines_container.h"
-
+#include <stdio.h>
 
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
+
+/* Definition of the NULL lines_container constant */
+struct lines_container NULL_LC = {
+    NULL_FILE,  /* type */
+    NULL,       /* name */
+    NULL,       /* lines */
+    0,          /* lines_index */
+    0           /* lines_capacity */
+};
 
 
 
@@ -111,7 +120,7 @@ int resize_lines_container(struct lines_container* container){
             return array[i];
         }
     }
-    return (struct lines_container){NULL, NULL};
+    return NULL_LC;
 }
 
 

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "lines_container.h"
 
-// #include "crud.c"
+/* #include "crud.c" */
 #include "pre_assembly.c"
 
 #define EXIT_SUCCESS 0
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     
     am_files = pre_assembly(argc, argv);
     if (!am_files) {
-        return EXIT_FAILURE;  // Handle allocation failure
+        return EXIT_FAILURE;  /* Handle allocation failure*/
     }
     
     

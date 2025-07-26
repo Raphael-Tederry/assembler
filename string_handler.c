@@ -49,10 +49,7 @@ int is_lable(char* word){
     }
 
 
-/* check_macro_end(line):
- *     get the line containig macro_end and check its leagal
- *     if yes return 0 otherwise return an apropriait error
- */
+
 
 
 

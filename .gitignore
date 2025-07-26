@@ -1,1 +1,4 @@
 private stuff.txt
+
+*.o
+*.exe
