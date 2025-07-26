@@ -1,5 +1,6 @@
-/* string_handler.c in charge of handling and manipulating strings */
+/* string_handler.c in charge of handling checking and manipulating strings */
 #include <stdio.h>
+#include <stdlib.h>
 
 /*is_string_valid: check if string isnt empty or only white spaces
 @param str: the string to check
