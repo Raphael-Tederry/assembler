@@ -31,7 +31,7 @@ void save_file(char* file_name, char* ending, char*** lines, int lines_index);
 
 
 /**raph woking
-    * main function of pre_assembly  lines_container* of the am files if successfull if we had an error we will return NULL
+    * main function of pre_assembly returns lines_container* of the am files if successfull if we had an error we will return NULL
     * process:
     * get the files name given to main from the command line, and thier number
     * if there are no files to assemble, the program will end successfully
@@ -68,6 +68,8 @@ struct lines_container* pre_assembly(int argc, char *argv[]){
     return am_files;
 }
 /**raph woking
+    * will go over a file in lines_container format and returns a new lines_container with the
+    * macros openned
     * process:
     * basic initialization of variables
     * going over the lines of the given file
@@ -135,6 +137,8 @@ struct lines_container pre_assembly_file(struct lines_container as_file){ //TODO
 
 
 /**raph done!
+ * will check if the macro initialization is correct and if not we return an error
+ * if it is correct we set the macro name to the second word
  *
  * process:
  * we check if we are in a macro
@@ -180,6 +184,9 @@ int macro_initialization_handler(int macro_list_index, struct lines_container* m
 
 
 /**raph done!
+ * will check if the macro end is correct and if not we return an error
+ * if it is correct we add the macro to the macro list
+ * we restart in_macro and macro for the next macro
  *
  * process:
  * we check if we are not in a macro
@@ -221,7 +228,7 @@ int macro_end_handler(char** line, int* in_macro, struct lines_container* macro,
  * @param macro_list_index current number of macros
  * @return new macro_list pointer, or NULL on allocation failure
  */
- struct lines_container* resize_macro_list_if_needed(struct lines_container* macro_list, int* macro_list_capacity, int macro_list_index) {
+ struct lines_container* resize_macro_list_if_needed(struct lines_container* macro_list, int* macro_list_capacity, int macro_list_index){
     if (macro_list_index >= *macro_list_capacity) {
         *macro_list_capacity *= 2; // Double the size
         macro_list = realloc(macro_list, (*macro_list_capacity) * sizeof(struct lines_container));

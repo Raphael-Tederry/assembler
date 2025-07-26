@@ -1,10 +1,46 @@
-functions name, file , creator, what does it does
+functions name, file , creator
+    what does it do
 
 
 char* add_ending_to_name(char *file_base_name, char *ending), string_handler.c , ruben
-adds ending to the name of the file xd 
-return pointer to string filename.ending
+    adds ending to the name of the file xd 
+    return pointer to string filename.ending
 
 int is_string_valid(const char*), string_handler.c , ruben,
-checks if sent string is not empty or only white spaces.
-if string is empty or only white spaces return 0 else return 1.
+    checks if sent string is not empty or only white spaces.
+    if string is empty or only white spaces return 0 else return 1.
+
+
+struct lines_container* pre_assembly(int argc, char *argv[]), pre_assembly.c, raph
+    main function of pre_assembly returns lines_container* of the am files if successfull if we had an error we will return NULL
+
+
+struct lines_container pre_assembly_file(struct lines_container as_file), pre_assembly.c, raph
+    will go over a file in lines_container format and returns a new lines_container with the
+    macros openned
+
+
+int macro_initialization_handler(int macro_list_index, struct lines_container* macro_list, char** line, int in_macro, struct lines_container* macro, char* name), pre_assembly.c, raph
+    will check if the macro initialization is correct and if not we return an error
+    if it is correct we set the macro name to the second word
+
+
+int macro_end_handler(char** line, int* in_macro, struct lines_container* macro, char* name, int* macro_list_index, struct lines_container* macro_list), pre_assembly.c, raph
+    will check if the macro end is correct and if not we return an error
+    if it is correct we add the macro to the macro list
+    we restart in_macro and macro for the next macro
+
+
+struct lines_container* resize_macro_list_if_needed(struct lines_container* macro_list, int* macro_list_capacity, int macro_list_index), pre_assembly.c, raph
+    resizes macro list if needed by doubling capacity
+
+
+int copy_lines_between_lines_container(struct lines_container* destination, struct lines_container origin), pre_assembly.c, raph
+    will copy all the lines from the origin lines_container to the destination lines_container
+    this function will add them to the destination lines_container no overwriting
+
+
+struct lines_container get_lines_container_by_name(int array_size, struct lines_container* array, char* name), pre_assembly.c, raph
+    will return the lines_container of from an array of lines_container with the given name
+
+
